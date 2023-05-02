@@ -63,6 +63,48 @@ dtree.fit(X_train, y_train)
 predictions = dtree.predict(X_test)
 from sklearn.metrics import classification_report,confusion_matrix
 print(classification_report(y_test,predictions,zero_division=1))
+x_traincnn = np.expand_dims(X_train, axis=2)
+x_testcnn = np.expand_dims(X_test, axis=2)
+print(x_traincnn.shape, x_testcnn.shape)
+import keras
+import numpy as np
+import matplotlib.pyplot as plt
+import tensorflow as tf
+from keras.preprocessing import sequence
+from keras.models import Sequential
+from keras.layers import Dense, Embedding
+from keras.utils import to_categorical
+from keras.layers import Input, Flatten, Dropout, Activation
+from keras.layers import Conv1D, MaxPooling1D
+from keras.models import Model
+from keras.callbacks import ModelCheckpoint
+from keras.optimizers import RMSprop
+
+
+
+model = Sequential()
+
+model.add(Conv1D(64, 5,padding='same',
+                 input_shape=(40,1)))
+model.add(Activation('relu'))
+model.add(Dropout(0.1))
+model.add(MaxPooling1D(pool_size=(4)))
+model.add(Conv1D(128, 5,padding='same',))
+model.add(Activation('relu'))
+model.add(Dropout(0.1))
+model.add(MaxPooling1D(pool_size=(4)))
+model.add(Conv1D(256, 5,padding='same',))
+model.add(Activation('relu'))
+model.add(Dropout(0.1))
+model.add(Flatten())
+model.add(Dense(8))
+model.add(Activation('softmax'))
+opt = RMSprop(learning_rate=0.00005, rho=0.9, epsilon=1e-07, decay=0.0)
+model.summary()
+model.compile(loss='sparse_categorical_crossentropy',
+              optimizer=opt,
+              metrics=['accuracy'])
+cnnhistory=model.fit(x_traincnn, y_train, batch_size=16, epochs=200, validation_data=(x_testcnn, y_test))
 
 
 
