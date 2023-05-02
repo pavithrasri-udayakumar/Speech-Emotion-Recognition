@@ -54,15 +54,7 @@ savedy = joblib.dump(y, os.path.join(save_dir, y_name))
 import joblib
 X = joblib.load(r'C:\Users\sonia\Downloads\archive (2)\X.joblib')
 y = joblib.load(r'C:\Users\sonia\Downloads\archive (2)\y.joblib')
-from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.33, random_state=42)
-from sklearn.tree import DecisionTreeClassifier
-dtree = DecisionTreeClassifier()
-dtree.fit(X_train, y_train)
-predictions = dtree.predict(X_test)
-from sklearn.metrics import classification_report,confusion_matrix
-print(classification_report(y_test,predictions,zero_division=1))
 
 
 
