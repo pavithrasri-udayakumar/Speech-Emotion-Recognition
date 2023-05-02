@@ -105,13 +105,16 @@ model.compile(loss='sparse_categorical_crossentropy',
               optimizer=opt,
               metrics=['accuracy'])
 cnnhistory=model.fit(x_traincnn, y_train, batch_size=16, epochs=200, validation_data=(x_testcnn, y_test))
-plt.plot(cnnhistory.history['loss'])
-plt.plot(cnnhistory.history['val_loss'])
-plt.title('model loss')
-plt.ylabel('loss')
+
+plt.plot(cnnhistory.history['accuracy'])
+plt.plot(cnnhistory.history['val_accuracy'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
+
+
 
 
 
