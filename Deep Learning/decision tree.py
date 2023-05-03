@@ -1,17 +1,18 @@
-# importing libraries
+# library for analysing signals
 import librosa
+# function for visualising audio signals
 from librosa import display
 import matplotlib.pyplot as plt
 import numpy as np
 
-# storing audio data into wave format
+#loads audio as np array and sampling rate
 data, sampling_rate = librosa.load(
     r'C:\Users\sonia\Downloads\archive (2)\Audio_Speech_Actors_01-24\Actor_01\03-01-05-02-01-02-01.wav')
 plt.figure(figsize=(12, 4))
-# converting audio to wave
+# display audio data as wave format
 librosa.display.waveshow(data, sr=sampling_rate)
 #plt.show()
-# displaying wave graph
+
 # importing libraries
 import time
 import os
@@ -79,6 +80,7 @@ from keras.layers import Conv1D, MaxPooling1D
 from keras.models import Model
 from keras.callbacks import ModelCheckpoint
 from keras.optimizers import RMSprop
+from tensorflow.keras.models import Sequential
 
 
 
@@ -105,14 +107,9 @@ model.compile(loss='sparse_categorical_crossentropy',
               optimizer=opt,
               metrics=['accuracy'])
 cnnhistory=model.fit(x_traincnn, y_train, batch_size=16, epochs=200, validation_data=(x_testcnn, y_test))
-
-plt.plot(cnnhistory.history['accuracy'])
-plt.plot(cnnhistory.history['val_accuracy'])
-plt.title('model accuracy')
-plt.ylabel('accuracy')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
+predictions = model.predict(x_testcnn)
+class_predict=predictions.argmax(axis=1)
+print(class_predict)
 
 
 

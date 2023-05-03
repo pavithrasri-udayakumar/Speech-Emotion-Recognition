@@ -30,7 +30,7 @@ class TESSPipeline:
         for subdir, dirs, files in os.walk(path):
             for filename in files:
                 if filename.startswith('OAF'):
-                    destination_path = TRAINING_FILES_PATH + 'Actor_26\\'
+                    destination_path = TRAINING_FILES_PATH + 'Actor_26/'
                     old_file_path = os.path.join(os.path.abspath(subdir), filename)
 
                     # Separate base from extension
