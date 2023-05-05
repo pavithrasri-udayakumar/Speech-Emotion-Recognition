@@ -23,6 +23,7 @@ observed_emotion = ['sad','angry','happy','disgust','surprised','neutral','calm'
 
 
 def feature_extraction(file_name, mfcc):
+  result=None
   X, sample_rate = librosa.load(os.path.join(file_name), res_type='kaiser_fast')
   if mfcc:
     mfccs = np.mean(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=40).T, axis=0)
@@ -60,20 +61,20 @@ def load_data(test_size=0.3):
       file_name = os.path.basename(file)
       emotion = emotions[
         file_name.split("-")[2]]  # to get emotion according to filename. dictionary emotions is defined above.
-      if emotion not in observed_emotions:  # options observed_emotions - RAVDESS and TESS, ravdess_emotions for RAVDESS only
+      if emotion not in observed_emotion:  # options observed_emotions - RAVDESS and TESS, ravdess_emotions for RAVDESS only
         continue
-      feature = extract_feature(file, mfcc)
+      feature = feature_extraction(file, mfcc)
       x.append(feature)
       y.append(emotion)
   if data['tess']:
-    for file in glob.glob("..\Datasets\TESS\*AF_*\*.wav"):
+    for file in glob.glob("..\Datasets\TESS\*AF_*.wav"):
       file_name = os.path.basename(file)
       emotion = file_name.split("_")[2][:-4]  # split and remove .wav
       if emotion == 'ps':
         emotion = 'surprised'
-      if emotion not in observed_emotions:  # options observed_emotions - RAVDESS and TESS, ravdess_emotions for RAVDESS only
+      if emotion not in observed_emotion:  # options observed_emotions - RAVDESS and TESS, ravdess_emotions for RAVDESS only
         continue
-      feature = extract_feature(file, mfcc)
+      feature = feature_extraction(file, mfcc)
       x.append(feature)
       y.append(emotion)
   return {"X": x, "y": y}
@@ -81,6 +82,7 @@ def load_data(test_size=0.3):
 start_time = time.time()
 
 Trial_dict = load_data(test_size = 0.3)
+print(Trial_dict)
 
 print("--- Data loaded. Loading time: %s seconds ---" % (time.time() - start_time))
 
@@ -94,4 +96,7 @@ y=y.rename(columns= {0: 'emotion'})
 data = pd.concat([X, y], axis =1)
 print(data.head())
 
+data = data.reindex(np.random.permutation(data.index))
+
+data.to_csv("RAVTESS_MFCC_Observed.csv")
 
