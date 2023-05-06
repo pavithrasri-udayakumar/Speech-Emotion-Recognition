@@ -125,7 +125,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 
-predictions = model.predict_classes(x_testcnn)
+predictions = np.argmax(model.predict(x_testcnn), axis=-1)
 
 predictions
 
