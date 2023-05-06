@@ -1,1 +1,2 @@
-yes
+TRAINING_FILES_PATH='https://github.com/pavithrasri-udayakumar/Speech-Emotion-Recognition/tree/main/features/'
+TESS_ORIGINAL_FOLDER_PATH='https://github.com/pavithrasri-udayakumar/Speech-Emotion-Recognition/tree/main/TESS_Toronto_emotional_speech_set_data/'
