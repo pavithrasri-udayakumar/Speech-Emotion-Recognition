@@ -5,7 +5,7 @@ import librosa
 import glob
 import os
 
-emotion={
+emotions={
   '01':'neutral',
   '02':'calm',
   '03':'happy',
@@ -50,7 +50,7 @@ def load_data(test_size=0.3):
   data = dataset_options()
   paths = []
   if data['ravdess']:
-    paths.append("..\features\Actor_*\*.wav")
+    paths.append("..\Datasets\RAVDESS\*\Actor_*\*.wav")
   elif data['ravdess_speech']:
     paths.append("..\Datasets\RAVDESS\Speech\Actor_*\*.wav")
   elif data['ravdess_song']:
@@ -82,7 +82,6 @@ def load_data(test_size=0.3):
 start_time = time.time()
 
 Trial_dict = load_data(test_size = 0.3)
-print(Trial_dict)
 
 print("--- Data loaded. Loading time: %s seconds ---" % (time.time() - start_time))
 
